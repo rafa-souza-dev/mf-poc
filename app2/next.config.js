@@ -12,14 +12,17 @@ const webpack = (config, options) => {
     filename: 'static/chunks/remoteEntry.js',
   };
 
+  const federationConfigWorkaround = {
+    ...federationConfig,
+    remotes: {
+      ...federationConfig.remotes,
+      next1: federationConfig.remotes.next1.replace('/remoteEntry', '//remoteEntry'),
+    }
+  }  
+
   config.plugins.push(
     new NextFederationPlugin(federationConfig),
-    new FederatedTypesPlugin({federationConfig: {
-      ...federationConfig,
-      remotes: {
-        next1: `next1@http://localhost:3000/_next/static/${isServer ? 'ssr' : 'chunks'}//remoteEntry.js`,
-      }
-    }}),
+    new FederatedTypesPlugin({federationConfig: federationConfigWorkaround }),
   );
 
   return config;
