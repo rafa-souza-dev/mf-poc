@@ -9,7 +9,6 @@ const federationConfig = {
   exposes: {
     './title': './src/components/exposedTitle',
     './button': './src/components/exposedButton',
-    './container': './src/components/exposedContainer',
   },
 }
 
