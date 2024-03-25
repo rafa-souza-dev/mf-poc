@@ -4,26 +4,21 @@ import { revalidate, FlushedChunks, flushChunks } from "@module-federation/nextj
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    if(process.env.NODE_ENV === "development" && !ctx?.req?.url?.includes("_next")) {
-      await revalidate().then((shouldReload) =>{
-        if (shouldReload) {
-          ctx?.res?.writeHead(302, { Location: ctx?.req?.url });
-          ctx?.res?.end();
-        }
-      });
+    if (process.env.NODE_ENV === "development" && !ctx?.req?.url?.includes("_next")) {
+      await revalidate();
     } else {
       ctx?.res?.on("finish", () => {
-        revalidate()
+        revalidate();
       });
     }
-    const initialProps = await Document.getInitialProps(ctx);
-    const chunks = await flushChunks()
 
+    const initialProps = await Document.getInitialProps(ctx);
+    const chunks = await flushChunks();
+  
     return {
       ...initialProps,
-      chunks
+      chunks,
     };
-
   }
 
   render() {
