@@ -24,10 +24,6 @@ const webpack = (config) => {
 const nextConfig = {
   webpack,
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
 };

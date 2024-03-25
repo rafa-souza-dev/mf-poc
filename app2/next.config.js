@@ -22,7 +22,7 @@ const webpack = (config, options) => {
 
   config.plugins.push(
     new NextFederationPlugin(federationConfig),
-    new FederatedTypesPlugin({federationConfig: federationConfigWorkaround }),
+    new FederatedTypesPlugin({ federationConfig: federationConfigWorkaround }),
   );
 
   return config;
@@ -31,10 +31,6 @@ const webpack = (config, options) => {
 const nextConfig = {
   webpack,
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
 };
