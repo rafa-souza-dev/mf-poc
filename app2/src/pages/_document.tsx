@@ -1,10 +1,17 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
-import React from "react";
+import { revalidate } from '@module-federation/nextjs-mf/utils';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 
-class MyDocument extends Document {
+export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+
+    ctx?.res?.on('finish', () => {
+      revalidate().then((shouldUpdate) => {
+        console.log('finished sending response', shouldUpdate);
+      });
+    });
+
+    return initialProps;
   }
 
   render() {
@@ -19,5 +26,3 @@ class MyDocument extends Document {
     );
   }
 }
-
-export default MyDocument;
