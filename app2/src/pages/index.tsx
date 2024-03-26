@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import React, { useState } from 'react';
+
+const Title = dynamic(() => import('next1/title'), {
+  ssr: false,
+});
 
 export default function Home() {
-  const [isClient, setIsClient] = useState(false);
   const [number, setNumber] = useState(0);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const Title = isClient ? require('next1/title').default : () => <div>Carregando...</div>;
 
   return (
     <>
-      {isClient && <Title />}
+      <Title />
       
       <br />
       <br />
