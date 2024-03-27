@@ -1,13 +1,38 @@
 const NextFederationPlugin = require('@module-federation/nextjs-mf');
 const { FederatedTypesPlugin } = require('@module-federation/typescript');
 
-const webpack = (config, options) => {
+const createRemotePromise = (isServer) => {
+  return `new Promise(resolve => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const version = urlParams.get('next1VersionParam')
+    const remoteUrlWithVersion = 'http://localhost:3001/' + version + '/remoteEntry.js'
+    const script = document.createElement('script')
+    script.src = remoteUrlWithVersion
+    script.onload = () => {
+      const proxy = {
+        get: (request) => window.next1.get(request),
+        init: (arg) => {
+          try {
+            return window.next1.init(arg)
+          } catch(e) {
+            console.log('remote container already initialized')
+          }
+        }
+      }
+      resolve(proxy)
+    }
+    document.head.appendChild(script);
+  })
+  `;
+};
+
+const webpack = async (config, options) => {
   const { isServer } = options;
 
   const federationConfig = {
     name: 'next2',
     remotes: {
-      next1: `next1@http://localhost:3000/_next/static/${isServer ? 'ssr' : 'chunks'}/remoteEntry.js`,
+      next1: createRemotePromise(isServer),
     },
     filename: 'static/chunks/remoteEntry.js',
   };
