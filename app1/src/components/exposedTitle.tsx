@@ -1,3 +1,3 @@
 export default function ExposedTitle() {
-    return <h1>Exposed titulo</h1>
+    return <h1>Exposed title</h1>
 }
