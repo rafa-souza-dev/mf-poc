@@ -7,8 +7,8 @@ const federationConfig = {
   name: 'next1',
   filename: 'static/chunks/remoteEntry.js',
   exposes: {
-    './title': './src/components/exposedTitle',
-    './button': './src/components/exposedButton',
+    './title': './src/components/exposedTitle.tsx',
+    './button': './src/components/exposedButton.tsx',
   },
 }
 
