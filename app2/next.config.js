@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const NextFederationPlugin = require('@module-federation/nextjs-mf');
 const { FederatedTypesPlugin } = require('@module-federation/typescript');
 
