@@ -3,13 +3,15 @@ import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/do
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx);
-
-    ctx?.res?.on('finish', () => {
-      revalidate().then((shouldUpdate) => {
-        console.log('finished sending response', shouldUpdate);
+    if (ctx?.pathname && !ctx?.pathname?.endsWith('_error')) {
+      await revalidate().then((shouldUpdate) => {
+        if (shouldUpdate) {
+          console.log('Hot Module Replacement (HMR) activated', shouldUpdate);
+        }
       });
-    });
+    }
+
+    const initialProps = await Document.getInitialProps(ctx);
 
     return initialProps;
   }
