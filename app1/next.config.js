@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+require('dotenv').config();
 
 const NextFederationPlugin = require('@module-federation/nextjs-mf');
 const { FederatedTypesPlugin } = require('@module-federation/typescript');
@@ -7,9 +7,8 @@ const federationConfig = {
   name: 'next1',
   filename: 'static/chunks/remoteEntry.js',
   exposes: {
-    './title': './src/components/exposedTitle',
-    './button': './src/components/exposedButton',
-    './container': './src/components/exposedContainer',
+    './title': './src/components/exposedTitle.tsx',
+    './button': './src/components/exposedButton.tsx',
   },
 }
 
@@ -25,10 +24,6 @@ const webpack = (config) => {
 const nextConfig = {
   webpack,
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
 };
