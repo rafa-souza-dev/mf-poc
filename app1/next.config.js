@@ -12,11 +12,13 @@ const federationConfig = {
   },
 }
 
-const webpack = (config) => {
-  config.plugins.push(
-    new NextFederationPlugin(federationConfig),
-    new FederatedTypesPlugin({ federationConfig })
-  );
+const webpack = (config, options) => {
+  if (!options.isServer) {
+    config.plugins.push(
+      new NextFederationPlugin(federationConfig),
+      new FederatedTypesPlugin({ federationConfig })
+    );
+  }
 
   return config;
 }
