@@ -9,7 +9,13 @@ const federationConfig = {
   exposes: {
     './title': './src/components/exposedTitle.tsx',
     './button': './src/components/exposedButton.tsx',
+    './useDitto': './src/hooks/useDitto.ts',
   },
+  shared: {
+    '@tanstack/react-query': {
+      singleton: true
+    }
+  }
 }
 
 const webpack = (config, options) => {

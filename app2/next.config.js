@@ -10,6 +10,11 @@ const webpack = (config, options) => {
       next1: `next1@http://localhost:3000/_next/static/chunks/remoteEntry.js`,
     },
     filename: 'static/chunks/remoteEntry.js',
+    shared: {
+      '@tanstack/react-query': {
+        singleton: true
+      }
+    }
   };
 
   const federationConfigWorkaround = {
