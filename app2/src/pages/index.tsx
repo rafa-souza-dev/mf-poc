@@ -5,7 +5,7 @@ import React, { ComponentType, useState } from 'react';
 let Title: ComponentType<{}> = () => <div />;
 let useDitto: () => UseQueryResult<any, Error> = () => ({ data: null });
 
-if (typeof window !== 'undefined') {
+if (process.browser) {
   import('next1/useDitto')
     .then(module => { useDitto = module.default })
 
